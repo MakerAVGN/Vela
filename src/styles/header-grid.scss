@@ -410,7 +410,7 @@ svg {
           padding: 0;
           margin: 0;
         }
-        span {
+        .search-icon {
           display: none;
         }
       }
@@ -633,7 +633,7 @@ svg {
 
     .header-form {
       &__input {
-        padding: 1.2rem 6rem 1.2rem 2rem;
+        padding: 1.4rem 6rem 1.4rem 2rem;
         font-size: 1.4rem;
       }
 
@@ -834,10 +834,10 @@ svg {
         padding: 0.8rem;
         border-radius: 0.5rem;
         right: 0.3rem;
-        p {
+        span {
           display: none;
         }
-        span {
+        .search-icon {
           display: block;
         }
       }
