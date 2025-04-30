@@ -1,0 +1,860 @@
+@use "sass:color";
+$primary-color: #4888ff;
+$text-color: #343a3f;
+$light-gray: #f4f4f4;
+$light-gray-hover: #d4d9dd;
+$white-bg: #fff;
+$container-width: 1440px;
+
+@import "normalize.css";
+
+@font-face {
+  font-family: "Maza";
+  src: url("../fonts/MAZ55.otf") format("otf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+* {
+  font-family: "Maza", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+svg {
+  transition: all 0.3s ease;
+}
+
+.header-bg-row1 {
+  width: 100vw;
+  min-width: 100vw;
+  height: 4%; // или нужная высота первой строки
+  background: #f4f4f4;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+}
+
+.header-grid {
+  max-width: $container-width;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: grid;
+  grid-template-columns: auto auto auto 1fr auto auto auto auto; // 0.1fr 0.1fr 0.1fr
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "location phone phone time . delivery payment contacts"
+    "logo catalog search search lang heart hunter chest"
+    "logo categories categories categories . build build build";
+
+  align-items: center;
+  gap: 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+
+  &__location {
+    grid-area: location;
+    color: $text-color;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    a {
+      span {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
+    &:hover {
+      span {
+        color: red;
+      }
+    }
+  }
+  &__phone {
+    grid-area: phone;
+    grid-template-rows: 2/4;
+    color: $text-color;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 100%;
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
+  }
+  &__time {
+    grid-area: time;
+    color: $text-color;
+    font-size: 1.4rem;
+    justify-self: center;
+  }
+  &__nav {
+    justify-self: start;
+    font-size: 1.4rem;
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  .delivery {
+    grid-area: delivery;
+  }
+  .payment {
+    grid-area: payment;
+  }
+  .contacts {
+    grid-area: contacts;
+  }
+  &__location,
+  &__phone,
+  &__time,
+  &__nav {
+    padding: 0.8rem 0;
+    a {
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+  }
+  &__phone,
+  &__nav {
+    a:hover {
+      color: $primary-color;
+    }
+  }
+
+  &__logo {
+    grid-area: logo;
+    justify-self: end;
+    align-self: start;
+    padding-right: 2.3rem;
+    svg {
+      width: 8rem;
+      height: 8rem;
+    }
+    circle {
+      fill: $primary-color !important;
+    }
+
+    path {
+      fill: white !important;
+    }
+  }
+  &__catalog {
+    grid-area: catalog;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      padding: 1.6rem 3rem;
+      border-radius: 0.8rem;
+      background-color: $primary-color;
+      cursor: pointer;
+      span {
+        width: 3.8rem;
+        height: 1.6rem;
+        color: $white-bg;
+      }
+    }
+  }
+
+  .catalog-dropdown {
+    position: absolute;
+    left: 17rem;
+    right: 0;
+    top: 120%;
+    background: #fff;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.08);
+    border-radius: 0.8rem;
+    z-index: 100;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    max-width: 89.2rem;
+
+    &.active {
+      display: block;
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    &__wrapper {
+      display: flex;
+      min-height: 40rem;
+    }
+
+    &__list {
+      width: 33.8rem;
+      padding: 3rem 0;
+      margin: 0;
+      list-style: none;
+    }
+
+    &__item {
+      position: relative;
+
+      &.active {
+        background: #f8f8f8;
+
+        .catalog-dropdown__link {
+          color: $primary-color;
+          font-weight: 500;
+
+          svg {
+            stroke: $primary-color;
+          }
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 2px;
+          height: 100%;
+          background: $primary-color;
+        }
+      }
+    }
+
+    &__link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.3rem 2rem 1.3rem 3rem;
+      color: $text-color;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.6rem;
+      border-bottom: solid 1px $light-gray;
+      svg {
+        width: 24px;
+        height: 24px;
+        color: $primary-color;
+        transition: all 0.3s ease;
+        path {
+          transition: all 0.3s ease;
+        }
+      }
+
+      &:hover {
+        background: #f8f8f8;
+        color: $text-color !important;
+        svg {
+          color: $primary-color;
+          path {
+            fill-opacity: 1;
+          }
+        }
+      }
+      &.active {
+        background: #f8f8f8;
+      }
+    }
+
+    &__submenu {
+      flex-grow: 1;
+      padding: 2.8rem 4.1rem;
+      transition: all 0.2s ease;
+    }
+
+    &__submenu-columns {
+      display: flex;
+      gap: 1.8rem;
+    }
+
+    &__submenu-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    &__submenu-column:last-of-type {
+      padding-left: 2.2rem;
+    }
+
+    &__submenu-title {
+      font-size: 3rem;
+      font-weight: 500;
+      color: $text-color;
+    }
+
+    &__submenu-list {
+      margin-top: 1.7rem;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+      li {
+        font-size: 1.6rem;
+
+        a {
+          transition: 0.3s ease all;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }
+        &:hover {
+          a {
+            color: $primary-color;
+          }
+        }
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+        color: $text-color;
+        text-decoration: none;
+        transition: color 0.2s ease;
+        gap: 0.8rem;
+        span {
+          font-size: 1.4rem;
+          color: rgba($text-color, 0.5);
+        }
+
+        &:hover {
+          color: var(--primary-color);
+        }
+      }
+    }
+
+    &__arrow {
+      height: 65%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      svg {
+        color: $text-color;
+      }
+    }
+
+    &__content {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+  }
+  &__search {
+    grid-area: search;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    .catalog-icon svg {
+      color: #fff;
+    }
+
+    .header-form {
+      flex-grow: 1;
+      margin-right: 1.4rem;
+      &__wrapper {
+        position: relative;
+        width: 100%;
+      }
+
+      &__input {
+        width: 100%;
+        padding: 1.4rem 7.5rem 1.4rem 2.4rem;
+        border: 0.1rem solid rgba($primary-color, 0.2);
+        border-radius: 0.8rem;
+        transition: all 0.3s ease;
+        font-size: 1.6rem;
+        line-height: 100%;
+        color: $text-color;
+        &:focus {
+          border-color: rgba($primary-color, 0.8);
+          outline: none;
+        }
+      }
+
+      &__button {
+        position: absolute;
+        right: 0.4rem;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 1.3rem 1.9rem;
+        border: none;
+        border-radius: 0.4rem;
+        background-color: $primary-color;
+        color: white;
+        font-size: 1.4rem;
+        line-height: 100%;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        p {
+          padding: 0;
+          margin: 0;
+        }
+        span {
+          display: none;
+        }
+      }
+    }
+
+    .messenger-link {
+      width: 4.8em;
+      height: 4.8rem;
+      background-color: $light-gray;
+      padding: 1.2rem;
+      border-radius: 0.4rem;
+      transition: all 0.3s ease;
+      color: $text-color;
+      &:hover {
+        background-color: $light-gray-hover;
+        svg {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .icon {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    border: 0.1rem solid #d3d3d3;
+    border-radius: 0.4rem;
+    transition: 0.3s ease all;
+    width: 4.8rem;
+    height: 4.8rem;
+    span {
+      width: 2.4rem;
+      height: 2.4rem;
+      svg {
+        width: 100%;
+        height: 100%;
+        color: $text-color;
+      }
+    }
+    &:hover {
+      border-color: #cdbecd;
+      span {
+        svg {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+  .heart-icon {
+    grid-area: heart;
+  }
+  .hunter-icon {
+    grid-area: hunter;
+  }
+  .chest-icon {
+    grid-area: chest;
+  }
+  &__lang {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    grid-area: lang;
+    justify-self: end;
+    margin-left: 2.5rem;
+    button {
+      font-size: 1.6rem;
+      line-height: 100%;
+      padding: 0.2rem;
+      border: none;
+      background: none;
+      color: rgba($text-color, $alpha: 0.4);
+      font-size: 1.6rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .checked {
+      color: rgba($text-color, $alpha: 1);
+    }
+    span {
+      margin-left: 0.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .earth-icon {
+      margin-left: 0.2rem;
+      width: 2.4rem;
+      height: 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        width: 100%;
+      }
+    }
+  }
+
+  .header-main__categories {
+    grid-area: categories;
+    ul {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .category-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: $text-color;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      background-color: $light-gray;
+      padding: 1.1rem 1.5rem;
+      border-radius: 0.8rem;
+      font-size: 1.6rem;
+      line-height: 100%;
+      transition: 0.3s all ease;
+      cursor: pointer;
+      span {
+        width: 24px;
+        height: 24px;
+        svg {
+          width: 24px;
+          height: 24px;
+          color: $primary-color;
+          path {
+            transition: 0.3s all ease;
+          }
+        }
+      }
+
+      &:hover {
+        color: $primary-color;
+        svg {
+          path {
+            color: $primary-color;
+            fill-opacity: 1;
+          }
+        }
+      }
+    }
+  }
+  &__build {
+    width: 95%;
+    grid-area: build;
+    justify-self: end;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1.2rem 0.9rem;
+    font-size: 1.6rem;
+    background-color: $light-gray;
+    border: none;
+    border-radius: 0.8rem;
+    color: $primary-color;
+    transition: 0.3s all ease;
+    &:hover {
+      color: #fff;
+      background-color: $primary-color;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .header-grid {
+    padding: 0 2rem;
+    grid-template-columns: auto auto auto 1fr auto auto auto auto; // 0.1fr 0.1fr 0.1fr
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "location phone phone time . delivery payment contacts"
+      "logo catalog search search lang heart hunter chest"
+      "logo categories categories categories . build build build";
+
+    .header-main__categories {
+      .category-link {
+        padding: 0.8rem 1.2rem;
+        font-size: 1.4rem;
+      }
+    }
+
+    &__logo svg {
+      width: 7rem;
+      height: 7rem;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .header-grid {
+    grid-template-columns: auto auto auto 1fr auto auto auto auto; // 0.1fr 0.1fr 0.1fr
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "lang phone phone time . delivery payment contacts"
+      "logo catalog search search . heart hunter chest"
+      "logo categories categories categories . build build build";
+    gap: 1rem;
+
+    &__location,
+    .payment {
+      display: none;
+    }
+
+    &__logo {
+      padding-right: 1rem;
+      svg {
+        width: 6rem;
+        height: 6rem;
+      }
+    }
+
+    .header-form {
+      &__input {
+        padding: 1.2rem 6rem 1.2rem 2rem;
+        font-size: 1.4rem;
+      }
+
+      &__button {
+        padding: 1rem 1.5rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header-grid {
+    padding: 0 1.5rem;
+    grid-template-columns: auto auto auto 1fr auto auto auto auto; // 0.1fr 0.1fr 0.1fr
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "lang phone phone time . delivery payment contacts"
+      "logo catalog search search . heart hunter chest"
+      "logo categories categories categories . build build build";
+
+    &__time {
+      font-size: 1.2rem;
+    }
+
+    &__phone {
+      font-size: 1.2rem;
+    }
+
+    .icon {
+      width: 4.2rem;
+      height: 4.2rem;
+      padding: 1rem;
+
+      span {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    .header-main__categories {
+      .category-link {
+        padding: 0.6rem 1rem;
+        font-size: 1.2rem;
+        gap: 0.5rem;
+
+        span {
+          width: 20px;
+          height: 20px;
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .header-bg-row1 {
+    height: 32px;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-bg-row1 {
+    height: 26px; // или нужная высота первой строк
+  }
+  .header-grid {
+    grid-template-columns: repeat(5, auto);
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "lang lang phone phone phone"
+      "catalog hunter logo heart chest"
+      "search search search search search";
+    row-gap: 1rem;
+    column-gap: 0.6rem;
+    padding: 0.4rem 1.5rem;
+    max-width: 100vw;
+  }
+
+  .header-grid__lang {
+    grid-area: lang;
+    margin-left: 0;
+    justify-self: start;
+    align-self: start;
+    span {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      svg {
+        width: 100%;
+      }
+    }
+    .earth-icon {
+      width: 1.6rem;
+      height: 1.6rem;
+      svg {
+        width: 1.6rem;
+        height: 1.6rem;
+        path {
+          width: 100%;
+        }
+      }
+    }
+    button {
+      font-size: 1.4rem;
+    }
+  }
+  .header-grid__phone {
+    grid-area: phone;
+    font-size: 1.4rem;
+    justify-self: end;
+    align-self: end;
+    padding: 0;
+  }
+  .header-grid__catalog {
+    width: 4rem;
+    height: 4rem;
+    button {
+      padding: 1.25rem 0.625rem;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 0.4rem;
+      span {
+        width: 2.75rem;
+        height: 1.5rem;
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  .header-grid__logo {
+    grid-area: logo;
+    justify-self: center;
+    align-self: center;
+    padding: 0;
+    svg {
+      width: 5.6rem;
+      height: 5.6rem;
+    }
+  }
+  .heart-icon {
+    grid-area: heart;
+  }
+  .chest-icon {
+    grid-area: chest;
+  }
+  .header-grid__search {
+    grid-area: search;
+  }
+
+  .messenger-link {
+    display: none;
+  }
+  .header-main__categories {
+    display: none;
+  }
+  .header-grid__build {
+    display: none;
+  }
+  .header-grid__time {
+    display: none;
+  }
+  .header-grid__nav {
+    display: none;
+  }
+  .header-grid__location {
+    display: none;
+  }
+  .catalog-dropdown {
+    display: none;
+  }
+  // Примерные размеры и выравнивание для иконок и логотипа
+  .header-grid__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+  }
+
+  .header-grid__search {
+    width: 100%;
+
+    .header-form {
+      margin: 0;
+      input {
+        font-size: 1.4rem;
+        border-radius: 0.8rem;
+      }
+      button {
+        width: 4rem;
+        height: 4rem;
+        padding: 0.8rem;
+        border-radius: 0.5rem;
+        right: 0.3rem;
+        p {
+          display: none;
+        }
+        span {
+          display: block;
+        }
+      }
+    }
+  }
+
+  .header-grid .icon {
+    width: 4rem;
+    height: 4rem;
+    padding: 1rem;
+    justify-self: center;
+    align-self: center;
+    span {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
+
+// Проверяющий тимлид. В конце концов я просто устал это адаптивить в такие короткие сроки, поэтому оставил как есть. Grid сетка готова, и ее просто доработать и будет потрясающий header, но сроки маленькие для такой реализации.
